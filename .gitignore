@@ -1,0 +1,8 @@
+.venv/
+data/
+run/
+scratch/
+__pycache__/
+*.pt
+*.bin
+*.log
