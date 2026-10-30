@@ -15,7 +15,7 @@ model.eval()
 tok = Tokenizer.from_file("tokenizer.json")
 temp, max_new, turns = 0.7, 200, []  # turns: list of (user_text, bot_text)
 
-print(f"Kadmos-1 loaded from {path} (step {ck['state']['step']}, {ck['state']['elapsed']/3600:.1f}h of training). "
+print(f"Kadmos-1 loaded from {path}. "
       "'reset' clears memory, '/temp X' changes randomness, 'quit' exits.")
 while True:
     try:

@@ -1,4 +1,4 @@
-"""Overnight trainer: mixed stories / python / chat data, time-budgeted cosine schedule, resumable.
+"""Trainer: mixed stories / python / chat data, time-budgeted schedule, resumable.
 
 usage: train.py --hours 8 [--dim 512 --layers 12 --heads 8] [--resume] [--bench]
 Stage 1 (first 80% of the budget): broad mix.  Stage 2 (last 20%): mostly chat + code Q&A, LR decaying to ~0.

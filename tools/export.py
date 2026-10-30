@@ -9,7 +9,6 @@ sys.modules.setdefault("model2", model)  # checkpoints written while the module 
 
 ck = torch.load(sys.argv[1], map_location="cpu", weights_only=False)
 out = {"model": {k: v.half() for k, v in ck["model"].items()},
-       "cfg": dataclasses.asdict(ck["cfg"]),
-       "state": {k: ck["state"][k] for k in ("step", "elapsed", "tokens", "best")}}
+       "cfg": dataclasses.asdict(ck["cfg"])}
 torch.save(out, sys.argv[2])
 print("wrote", sys.argv[2], f"({os.path.getsize(sys.argv[2])/1e6:.0f} MB)")

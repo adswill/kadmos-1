@@ -1,4 +1,4 @@
-"""Build the overnight training data (everything is tokenized by our own tokenizer, trained here).
+"""Build the training data (everything is tokenized by our own tokenizer, trained here).
 
 Sources
   stories : TinyStories subset                        -> grammar / coherence
