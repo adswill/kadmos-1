@@ -40,7 +40,6 @@ The name is from Kadmos (Cadmus), the figure in Greek myth who brought the alpha
 - [Results](#results)
 - [Example conversations](#example-conversations)
 - [How it was built](#how-it-was-built) · [Model](#model) · [Training data](#training-data) · [Training recipe](#training-recipe)
-- [Reproduce it](#reproduce-it)
 - [Project layout](#project-layout)
 - [Limitations](#limitations)
 - [Support](#support)
@@ -224,21 +223,7 @@ A few of these datasets (SODA, Everyday Conversations and several of the code in
 | Stage 2 (last 20% of time) | 5% stories, 5% Python, 15% code Q&A, 75% conversation |
 | Checkpoint kept | The one with the lowest conversation validation loss |
 
-The schedule is driven by wall-clock time rather than step count, so the run finishes on schedule whatever the speed of the machine. The trainer saves a checkpoint every ten minutes and the launcher restarts it from the last checkpoint if it crashes, and keeps the Mac awake with `caffeinate`.
-
-## Reproduce it
-
-```bash
-pip install -r requirements.txt
-python build_data.py                 # downloads the datasets, trains the tokenizer, writes data/ (about 1.5 GB)
-./run_overnight.sh 7.5 --compile     # trains for 7.5 hours, logs to run/overnight.log
-python tools/plot.py                 # writes docs/training.svg from run/metrics.jsonl
-python tools/export.py run/best.pt kadmos-1.pt
-python chat.py kadmos-1.pt
-```
-
-`build_data.py` takes roughly 15 minutes and needs about 5 GB of free disk space for the Hugging Face cache. Use `python train.py --hours 1` for a quick run. Other sizes work too: `--dim`, `--layers` and `--heads` change the model, though larger models were too slow to be worthwhile on this laptop in one night.
-
+The schedule is driven by wall-clock time rather than step count, so the run finishes on schedule whatever the speed of the machine.
 ## Project layout
 
 | File | Purpose |
@@ -247,7 +232,6 @@ python chat.py kadmos-1.pt
 | [train.py](train.py) | Time-budgeted, resumable trainer with evaluation, samples and checkpoints |
 | [chat.py](chat.py) | Interactive terminal chat |
 | [build_data.py](build_data.py) | Dataset download, cleaning, tokenizer training and tokenization |
-| [run_overnight.sh](run_overnight.sh) | Long-run launcher: keeps the Mac awake and restarts after a crash |
 | [tools/plot.py](tools/plot.py) | Dependency-free SVG chart of validation loss |
 | [tools/export.py](tools/export.py) | Converts a training checkpoint to a small fp16 inference file |
 | [tokenizer.json](tokenizer.json) | The trained 16,384-token tokenizer |
