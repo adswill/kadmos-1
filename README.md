@@ -82,20 +82,11 @@ Unedited transcripts from the released weights at temperature 0.7.
 
 ```
 you: Hello! What is your name?
-bot: My name is John.
+bot: My name is [name].
 you: Nice to meet you. What do you like to do on weekends?
-bot: I like to play sports and listen to music.
+bot: I like to go for walks in the park, go to the beach, and spend time with my family.
 you: That sounds fun. I usually just relax at home.
-bot: Yeah, it's a good way to stay in shape.
-```
-
-**Advice**
-
-```
-you: Can you give me some advice? I have a job interview tomorrow.
-bot: I would be happy to help. It's important to get some experience in your field, and I know a lot about what kinds of jobs you have, so I'd love to hear more about that.
-you: I am a little nervous.
-bot: I am a little nervous, but I think I can be helpful.
+bot: I'm always up for a good time at the park. I also like to watch TV and play video games.
 ```
 
 **Python**
@@ -103,12 +94,12 @@ bot: I am a little nervous, but I think I can be helpful.
 ````
 you: Write a Python function that reverses a string.
 bot: ```python
-def reverseString(str):
-    return str[::-1]
+def reverse_string(string):
+    reversed_string = ""
+    for i in range(len(string) - 1, -1, -1):
+        reversed_string += string[i]
 
-# Example
-string = "Hello World"
-print(reverseString(string)) # Output: Hello
+    return reversed_string
 ```
 
 you: Write a Python function to check if a number is prime.
@@ -117,41 +108,33 @@ def is_prime(num):
     if num == 1:
         return False
     for i in range(2, num):
-        if (num % i == 0):
+        if num % i == 0:
             return False
     return True
 ```
 
 you: Write a function that returns the sum of a list of numbers.
 bot: ```python
-def sum_list(nums):
-    # Initialize a counter variable to store the sum
+def sum_list(numbers):
     total = 0
-
-    # Iterate over the numbers from 1 to the given target number
-    for num in nums:
-        total += num
-
+    for number in numbers:
+        total += number
     return total
-
-# Test the function
-nums = [1, 2, 3, 4, 5]
-print(sum_list(nums)) # 9
 ```
 ````
 
-All three functions run. The string reversal and the prime check are correct. The sum function is correct, but its comments are wrong and it claims the sum of 1 to 5 is 9.
+All three functions run and are correct for these simple requests.
 
 **Where it fails**
 
 ```
-you: What is the capital of France?
-bot: The capital of France is Mars, but it's the largest country in the world.
+you: Can you give me some advice? I have a job interview tomorrow.
+bot: Let me check the list of resumes you have, and I'll get back to you.
 you: Tell me a short story about a dog.
-bot: Well, the capital of France is Mars.
+bot: The dog.
 ```
 
-It does not know facts, and it can get stuck on an earlier topic in the same conversation (type `reset` to clear it).
+It often misreads the request, gives very short answers to open-ended ones, and invents facts. Type `reset` to clear the conversation memory.
 
 ## Model
 
@@ -198,10 +181,10 @@ Validation loss is cross-entropy in nats per token on held-out text from each so
 
 | Held-out text | Validation loss | Perplexity |
 |---|---|---|
-| Conversation | 2.44 | 11.5 |
-| Python Q&A | 1.28 | 3.6 |
-| Stories | 1.79 | 6.0 |
-| Python source | 2.22 | 9.2 |
+| Conversation | 2.46 | 11.7 |
+| Python Q&A | 1.26 | 3.5 |
+| Stories | 1.93 | 6.9 |
+| Python source | 2.39 | 10.9 |
 
 Predicting uniformly across the vocabulary would score 9.70. Python Q&A is the easiest text to predict because answers are formulaic; open-ended conversation is the hardest because many replies are plausible.
 
